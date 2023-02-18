@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'g++ -o CS548-1 hello.cpp'
+                sh 'g++ -o CS548-1 origin/mainhello.cpp'
             }
         }
         stage('Test') {
