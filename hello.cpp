@@ -1,6 +1,10 @@
+//File: hello.cpp
 #include <iostream>
+using namespace std;
 
-int main() {
-  std::cout << "Hello, World!\n";
+int main(void) {
+  cout << "Hi, World\n";
+  cout << "Hello, Jenkins\n";
+  cout << "I have successfully built and run\n";
   return 0;
 }
