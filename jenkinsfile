@@ -1,27 +1,22 @@
-pipeline {
-  agent any
-  stages {
-    stage('Build') {
-      steps {
-        sh 'g++ ./main/PES2UG20CS548.cpp'
-        echo 'Build Stage Successful'
-      }
-    }
-    stage('Test') {
-      steps {
-        sh './a.out'
-        echo 'Test Stage Successful'
-      }
-    }
-    stage('Deploy') {
-      steps {
-        echo 'Deployment Successful'
-      }
-    }
-  }
-  post {
-      failure {
-        echo 'Pipeline Failed'
-      }
-  }
+pipeline { 
+agent any
+ stages {
+ stage('Build'){
+ steps {
+ sh 'g++ working.cpp'
+ build job: "PES2UG20CS548-1", wait: true
+ }
+5
+ }
+ stage('Test'){
+ steps{
+ sh './a.exe'
+ }
+ }
+ }
+ post {
+ failure {
+ echo 'pipeline failed'
+ }
+ }
 }
