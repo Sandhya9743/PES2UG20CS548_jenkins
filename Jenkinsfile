@@ -1,31 +1,29 @@
 pipeline {
-    agent any
-
-    stages {
-        stage('Build') {
-            steps {
-                sh 'mvn clean package'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                sh 'mvn deploy'
-            }
-        }
+  agent any
+  
+  stages {
+    stage('Build') {
+      steps {
+        sh 'mvn clean install'
+      }
     }
-
-    post {
-        always {
-            script {
-                if (currentBuild.result != 'SUCCESS') {
-                    echo "Pipeline failed"
-                }
-            }
-        }
+    
+    stage('Test') {
+      steps {
+        sh 'mvn test'
+      }
     }
+    
+    stage('Deploy') {
+      steps {
+        sh 'scp target/myapp.war user@server:/path/to/deploy'
+      }
+    }
+  }
+  
+  post {
+    failure {
+      echo 'pipeline failed'
+    }
+  }
 }
