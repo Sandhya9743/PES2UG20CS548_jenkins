@@ -1,21 +1,35 @@
 pipeline {
     agent any
+    
     stages {
         stage('Build') {
             steps {
-                sh 'g++ -o CS548-1 origin/main/hello.cpp'
+                // Run build commands here
+                sh 'npm run build'
             }
         }
         stage('Test') {
             steps {
-                sh './CS543-1'
+                // Run test commands here
+                sh 'npm run test'
             }
         }
-        
+        stage('Deploy') {
+            steps {
+                // Run deployment commands here
+                sh 'npm run deploy'
+            }
+        }
     }
+    
     post {
-        failure {
-            echo 'Pipeline failed'
-        }
-    }
+        always {
+            // Display "pipeline failed" if any of the stages failed
+            script {
+                if (currentBuild.currentResult == 'FAILURE') {
+                    echo 'pipeline failed'
+                }
+            }
+        }
+    }
 }
