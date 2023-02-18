@@ -4,29 +4,31 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Execute build steps here
-                sh 'make'
+                // Run build commands
+                sh 'npm install'
+                sh 'npm run build'
             }
         }
         stage('Test') {
             steps {
-                // Execute test steps here
-                sh 'make test'
+                // Run tests
+                sh 'npm run test'
             }
         }
         stage('Deploy') {
             steps {
-                // Execute deploy steps here
-                sh 'make deploy'
+                // Deploy application
+                sh 'npm run deploy'
             }
         }
     }
     
     post {
         always {
+            // Display message if pipeline failed
             script {
                 if (currentBuild.result == 'FAILURE') {
-                    println 'Pipeline failed'
+                    echo 'pipeline failed'
                 }
             }
         }
