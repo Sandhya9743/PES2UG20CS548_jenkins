@@ -1,29 +1,21 @@
 pipeline {
-  agent any
-  
-  stages {
-    stage('Build') {
-      steps {
-        sh 'mvn clean install'
-      }
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'g++ -o CS548-1 hello.cpp'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh './CS543-1'
+            }
+        }
+        
     }
-    
-    stage('Test') {
-      steps {
-        sh 'mvn test'
-      }
-    }
-    
-    stage('Deploy') {
-      steps {
-        sh 'scp target/myapp.war user@server:/path/to/deploy'
-      }
-    }
-  }
-  
-  post {
-    failure {
-      echo 'pipeline failed'
-    }
-  }
+    post {
+        failure {
+            echo 'Pipeline failed'
+        }
+    }
 }
