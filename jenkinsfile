@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                sh 'g++ -o PES2UG20CS548-1 new.cpp'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh './PES2UG20CS548'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'deploy-script.sh'
+            }
+        }
+    }
+    post {
+        always {
+            echo 'pipeline completed'
+            
+                failure{
+                    echo 'pipeline failed'
+                }
+            }
+        }
+    }
+
