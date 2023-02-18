@@ -1,21 +1,20 @@
 pipeline {
-    agent any
-
+    agent any 
     stages {
-        stage('Build') {
+        stage ('Build') {
             steps {
-                sh 'mvn clean package'
+                sh 'g++ -o PES2UG20CS548-1 hello.cpp'
             }
         }
-        stage('Test') {
+        stage ('Test') {
             steps {
-                sh 'mvn test'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                sh 'mvn deploy'
+                sh './PES2UG20CS548-1'
             }
         }
     }
+    post {
+        failure {
+            echo 'Pipeline failed'
+        }
+    }
 }
