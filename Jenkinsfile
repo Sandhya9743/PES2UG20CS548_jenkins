@@ -1,24 +1,31 @@
 pipeline {
     agent any
+
     stages {
         stage('Build') {
             steps {
-                sh 'g++ -o try.cpp'
-                echo "Build Successful"
+                sh 'mvn clean package'
             }
         }
         stage('Test') {
             steps {
-                sh './try.cpp'
+                sh 'mvn test'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'mvn deploy'
             }
         }
     }
+
     post {
         always {
-            echo 'Pipeline completed'
+            script {
+                if (currentBuild.result != 'SUCCESS') {
+                    echo "Pipeline failed"
+                }
+            }
         }
-        failure {
-            echo 'Pipeline failed'
-        }
-    }
+    }
 }
